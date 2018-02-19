@@ -1,6 +1,6 @@
 ﻿namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    public interface ISerializer
+    public interface IFooSerializer
     {
         string Serialize(IFoo foo);
     }
