@@ -1,6 +1,8 @@
-﻿namespace ComplexJsonNestedSerialization.Core.Models
+﻿using ComplexJsonNestedSerialization.Core.Interfaces;
+
+namespace ComplexJsonNestedSerialization.Core.Models
 {
-    public class Baz
+    public class Baz : IBaz
     {
         public int Id { get; set; }
         public string MyProperty { get; set; }

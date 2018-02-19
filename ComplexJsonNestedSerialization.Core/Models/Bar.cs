@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using ComplexJsonNestedSerialization.Core.Interfaces;
+using System.Collections.Generic;
 
 namespace ComplexJsonNestedSerialization.Core.Models
 {
-    public class Bar
+    public class Bar : IBar
     {
         public int Id { get; set; }
         public bool ShouldSerializeSomeBazProperty { get; set; }
-        public IEnumerable<Baz> Bazez { get; set; }
+        public IEnumerable<IBaz> Bazez { get; set; }
     }
 }
