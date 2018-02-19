@@ -7,6 +7,6 @@ namespace ComplexJsonNestedSerialization.Core.Models
     {
         public int Id { get; set; }
         public bool ShouldSerializeSomeBazProperty { get; set; }
-        public IEnumerable<IBaz> Bazez { get; set; }
+        public IEnumerable<IBaz> Bazes { get; set; }
     }
 }
