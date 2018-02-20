@@ -11,7 +11,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         /// containing 2 Bars, and 2 Bazes per Bar (4 Bazes total).
         /// </summary>
         /// <returns></returns>
-        public static IFoo GetDefaultFoo()
+        public static IFoo<Bar, Baz> GetDefaultFoo()
         {
             return new Foo()
             {

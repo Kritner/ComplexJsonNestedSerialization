@@ -2,9 +2,11 @@
 
 namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    public interface IFoo
+    public interface IFoo<TBar, TBaz>
+        where TBar : IBar<TBaz>
+        where TBaz : IBaz
     {
-        IEnumerable<IBar> Bars { get; set; }
+        IEnumerable<TBar> Bars { get; set; }
         int Id { get; set; }
     }
 }

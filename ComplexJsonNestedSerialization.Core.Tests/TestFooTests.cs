@@ -26,8 +26,8 @@ namespace ComplexJsonNestedSerialization.Core.Tests
             const int numberOfBars = 2;
             const int numberOfBazes = 4;
 
-            var json = new FooSerializer().Serialize(TestFoo.GetDefaultFoo());
-            FooDeserializer<Foo> fd = new FooDeserializer<Foo>();
+            var json = new FooSerializer<Bar, Baz>().Serialize(TestFoo.GetDefaultFoo());
+            FooDeserializer<Foo, Bar, Baz> fd = new FooDeserializer<Foo, Bar, Baz>();
 
             var result = fd.Deserialize(json);
 

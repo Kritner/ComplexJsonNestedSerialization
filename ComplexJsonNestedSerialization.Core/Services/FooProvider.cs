@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace ComplexJsonNestedSerialization.Core.Services
 {
-    public class FooProvider : IFooProvider
+    public class FooProvider : IFooProvider<Bar, Baz>
     {
-        public IFoo GetFoo()
+        public IFoo<Bar, Baz> GetFoo()
         {
             return new Foo()
             {
