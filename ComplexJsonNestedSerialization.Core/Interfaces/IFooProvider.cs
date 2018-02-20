@@ -2,7 +2,7 @@
 
 namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    interface IFooProvider
+    public interface IFooProvider
     {
         IFoo GetFoo();
     }
