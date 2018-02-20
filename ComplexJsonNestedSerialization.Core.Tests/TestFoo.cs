@@ -29,7 +29,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
                                 Id = 0,
                                 AndYetAnotherProperty = 0,
                                 AnotherProperty = "0",
-                                MyProperty = "0"
+                                MyProperty = "rakataka"
                             },
                             new Baz()
                             {
