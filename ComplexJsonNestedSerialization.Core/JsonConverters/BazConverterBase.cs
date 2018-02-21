@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ComplexJsonNestedSerialization.Core.Interfaces;
 using Newtonsoft.Json;
@@ -31,10 +33,16 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             throw new ArgumentException($"{nameof(value)} was incorrect type");
         }
 
-        protected PropertyInfo[] GetPublicProperties(TBaz tBaz)
+        protected IEnumerable<PropertyInfo> GetPublicProperties(TBaz tBaz)
         {
             Type t = typeof(TBaz);
-            return t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var props =
+                t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    // Only include properties that don't have the JsonIgnore attribute
+                    .Where(w => !Attribute.IsDefined(w, typeof(JsonIgnoreAttribute)))
+                    .ToList();
+
+            return props;
         }
     }
 }

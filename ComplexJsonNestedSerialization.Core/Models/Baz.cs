@@ -1,4 +1,5 @@
 ﻿using ComplexJsonNestedSerialization.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Models
 {
@@ -8,5 +9,7 @@ namespace ComplexJsonNestedSerialization.Core.Models
         public string MyProperty { get; set; }
         public string AnotherProperty { get; set; }
         public int AndYetAnotherProperty { get; set; }
+        [JsonIgnore]
+        public bool ShouldBeIgnoredOnClassLevel { get; set; }
     }
 }

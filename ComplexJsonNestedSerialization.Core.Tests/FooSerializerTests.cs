@@ -52,5 +52,36 @@ namespace ComplexJsonNestedSerialization.Core.Tests
 
             Assert.AreEqual(myPropertyNumberOccurences, matches.Count);
         }
+
+        [Test]
+        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithDefaultConverter()
+        {
+            // Remove the default converters
+            _subject.JsonConverters = new List<JsonConverter>();
+
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo());
+
+            Regex regex = new Regex(
+                nameof(Baz.ShouldBeIgnoredOnClassLevel),
+                RegexOptions.IgnoreCase
+            );
+            var matches = regex.Matches(json);
+
+            Assert.AreEqual(0, matches.Count(), nameof(matches));
+        }
+
+        [Test]
+        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithCustomConverter()
+        {
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo());
+
+            Regex regex = new Regex(
+                nameof(Baz.ShouldBeIgnoredOnClassLevel), 
+                RegexOptions.IgnoreCase
+            );
+            var matches = regex.Matches(json);
+
+            Assert.AreEqual(0, matches.Count(), nameof(matches));
+        }
     }
 }
