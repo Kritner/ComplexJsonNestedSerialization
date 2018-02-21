@@ -38,9 +38,22 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             Type t = typeof(TBaz);
             var props =
                 t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    // Only include properties that don't have the JsonIgnore attribute
-                    .Where(w => !Attribute.IsDefined(w, typeof(JsonIgnoreAttribute)))
+                    // Only include properties that don't have the JsonIgnore attribute    
+                    .Where(w => !Attribute.IsDefined(w, typeof(JsonIgnoreAttribute), true))
                     .ToList();
+
+            // Apparently "true" on Attribute.IsDefined doesn't work how I'd expect it too.
+            var tInt = t.GetInterfaces();
+            foreach (var i in tInt)
+            {
+                var iProps = i.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(w => Attribute.IsDefined(w, typeof(JsonIgnoreAttribute), true))
+                    .ToList();
+
+                // Remove properties from props that have an 
+                // interface property containing the JsonIgnore attribute
+                props.RemoveAll(r => iProps.Select(s => s.Name).Contains(r.Name));
+            }
 
             return props;
         }

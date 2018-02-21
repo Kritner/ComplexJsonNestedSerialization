@@ -54,7 +54,9 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         }
 
         [Test]
-        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithDefaultConverter()
+        [TestCase(nameof(Baz.ShouldBeIgnoredOnClassLevel))]
+        [TestCase(nameof(Baz.ShouldIgnoreInterfaceLevelProperty))]
+        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithDefaultConverter(string propertyName)
         {
             // Remove the default converters
             _subject.JsonConverters = new List<JsonConverter>();
@@ -62,7 +64,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
             var json = _subject.Serialize(TestFoo.GetDefaultFoo());
 
             Regex regex = new Regex(
-                nameof(Baz.ShouldBeIgnoredOnClassLevel),
+                propertyName,
                 RegexOptions.IgnoreCase
             );
             var matches = regex.Matches(json);
@@ -71,12 +73,14 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         }
 
         [Test]
-        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithCustomConverter()
+        [TestCase(nameof(Baz.ShouldBeIgnoredOnClassLevel))]
+        [TestCase(nameof(Baz.ShouldIgnoreInterfaceLevelProperty))]
+        public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithCustomConverter(string propertyName)
         {
             var json = _subject.Serialize(TestFoo.GetDefaultFoo());
 
             Regex regex = new Regex(
-                nameof(Baz.ShouldBeIgnoredOnClassLevel), 
+                propertyName, 
                 RegexOptions.IgnoreCase
             );
             var matches = regex.Matches(json);

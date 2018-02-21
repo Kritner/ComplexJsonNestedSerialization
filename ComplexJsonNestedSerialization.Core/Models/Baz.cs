@@ -11,5 +11,6 @@ namespace ComplexJsonNestedSerialization.Core.Models
         public int AndYetAnotherProperty { get; set; }
         [JsonIgnore]
         public bool ShouldBeIgnoredOnClassLevel { get; set; }
+        public bool ShouldIgnoreInterfaceLevelProperty { get; set; }
     }
 }
