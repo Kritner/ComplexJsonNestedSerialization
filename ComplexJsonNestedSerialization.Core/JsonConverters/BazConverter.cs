@@ -1,9 +1,6 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using ComplexJsonNestedSerialization.Core.Interfaces;
 using ComplexJsonNestedSerialization.Core.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ComplexJsonNestedSerialization.Core.JsonConverters
 {
@@ -14,23 +11,6 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     public class BazConverterServer<TBaz> : BazConverterBase<TBaz>
         where TBaz : IBaz
     {
-        public override void WriteJson(JsonWriter writer, TBaz baz, JsonSerializer serializer)
-        {
-            JObject jo = new JObject();
-
-            foreach (PropertyInfo prop in GetPublicProperties(baz))
-            {
-                if (prop.CanRead)
-                {
-                    object propVal = prop.GetValue(baz, null);
-                    if (propVal != null)
-                    {
-                        jo.Add(prop.Name, JToken.FromObject(propVal, serializer));
-                    }
-                }
-            }
-            jo.WriteTo(writer);
-        }
     }
 
     /// <summary>
@@ -38,29 +18,15 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     /// </summary>
     public class BazConverterClient : BazConverterBase<Baz>
     {
-        public override void WriteJson(JsonWriter writer, Baz baz, JsonSerializer serializer)
+        protected override bool IsPropertyIncluded(Baz baz, PropertyInfo prop)
         {
-            JObject jo = new JObject();
-
-            foreach (PropertyInfo prop in GetPublicProperties(baz))
+            // let's just omit the "MyProperty" when its value is "rakataka"
+            if (prop.Name == nameof(baz.MyProperty) && baz.MyProperty == "rakataka")
             {
-                if (prop.CanRead)
-                {
-                    object propVal = prop.GetValue(baz, null);
-
-                    // let's just omit the "MyProperty" when its value is "rakataka"
-                    if (prop.Name == nameof(baz.MyProperty) && baz.MyProperty == "rakataka")
-                    {
-                        continue;
-                    }
-
-                    if (propVal != null)
-                    {
-                        jo.Add(prop.Name, JToken.FromObject(propVal, serializer));
-                    }
-                }
+                return false;
             }
-            jo.WriteTo(writer);
+
+            return true;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using ComplexJsonNestedSerialization.Core.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ComplexJsonNestedSerialization.Core.JsonConverters
 {
@@ -20,8 +21,6 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             return serializer.Deserialize<TBaz>(reader);
         }
 
-        public abstract void WriteJson(JsonWriter writer, TBaz baz, JsonSerializer serializer);
-        
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value is TBaz tBaz)
@@ -31,6 +30,24 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             }
 
             throw new ArgumentException($"{nameof(value)} was incorrect type");
+        }
+
+        public virtual void WriteJson(JsonWriter writer, TBaz baz, JsonSerializer serializer)
+        {
+            JObject jo = new JObject();
+
+            foreach (PropertyInfo prop in GetPublicProperties(baz))
+            {
+                if (prop.CanRead && IsPropertyIncluded(baz, prop))
+                {
+                    object propVal = prop.GetValue(baz, null);
+                    if (propVal != null)
+                    {
+                        jo.Add(prop.Name, JToken.FromObject(propVal, serializer));
+                    }
+                }
+            }
+            jo.WriteTo(writer);
         }
 
         protected IEnumerable<PropertyInfo> GetPublicProperties(TBaz tBaz)
@@ -56,6 +73,11 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             }
 
             return props;
+        }
+
+        protected virtual bool IsPropertyIncluded(TBaz baz, PropertyInfo prop)
+        {
+            return true;
         }
     }
 }
