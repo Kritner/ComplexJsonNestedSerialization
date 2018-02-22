@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using ComplexJsonNestedSerialization.Core.Factories;
+using ComplexJsonNestedSerialization.Core.Enums;
+using ComplexJsonNestedSerialization.Core.Interfaces;
 
 namespace ComplexJsonNestedSerialization.Core.Tests
 {
@@ -15,37 +18,22 @@ namespace ComplexJsonNestedSerialization.Core.Tests
     {
 
         private FooSerializer<Bar, Baz> _subject;
+        private readonly IJsonConvertersFactory _jsonConverterFactory = 
+            new JsonConvertersFactory();
 
         [SetUp]
         public void Setup()
         {
-            _subject = new FooSerializer<Bar, Baz>();
+            _subject = new FooSerializer<Bar, Baz>(_jsonConverterFactory);
         }
-
-        private static object[] _testData = new object[]
-        {
-            new object[]
-            {
-                new BazConverterServer<Baz>(),
-                4
-            },
-            new object[]
-            {
-                new BazConverterClient(),
-                3
-            }
-        };
-
+        
         [Test]
-        [TestCaseSource(nameof(_testData))]
-        public void ShouldExcludeRakatakaMyPropertyWithClientProjection(BazConverterBase<Baz> converterType, int myPropertyNumberOccurences)
+        [TestCase(Projection.Client, 3)]
+        [TestCase(Projection.Server, 4)]
+        [TestCase(Projection.None, 4)]
+        public void ShouldExcludeRakatakaMyPropertyWithClientProjection(Projection projection, int myPropertyNumberOccurences)
         {
-            _subject.JsonConverters = new List<JsonConverter>()
-            {
-                converterType
-            };
-
-            var json = _subject.Serialize(TestFoo.GetDefaultFoo());
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo(), projection);
 
             Regex regex = new Regex(nameof(Baz.MyProperty), RegexOptions.IgnoreCase);
             var matches = regex.Matches(json);
@@ -58,10 +46,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         [TestCase(nameof(Baz.ShouldIgnoreInterfaceLevelProperty))]
         public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithDefaultConverter(string propertyName)
         {
-            // Remove the default converters
-            _subject.JsonConverters = new List<JsonConverter>();
-
-            var json = _subject.Serialize(TestFoo.GetDefaultFoo());
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo(), Projection.None);
 
             Regex regex = new Regex(
                 propertyName,
@@ -77,7 +62,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         [TestCase(nameof(Baz.ShouldIgnoreInterfaceLevelProperty))]
         public void ShouldIgnoreJsonIgnoreClassLevelPropertiesWithCustomConverter(string propertyName)
         {
-            var json = _subject.Serialize(TestFoo.GetDefaultFoo());
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo(), Projection.Client);
 
             Regex regex = new Regex(
                 propertyName, 

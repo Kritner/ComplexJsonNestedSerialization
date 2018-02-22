@@ -1,9 +1,11 @@
-﻿namespace ComplexJsonNestedSerialization.Core.Interfaces
+﻿using ComplexJsonNestedSerialization.Core.Enums;
+
+namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
     public interface IFooSerializer<TBar, TBaz>
         where TBar : IBar<TBaz>
         where TBaz : IBaz
     {
-        string Serialize(IFoo<TBar, TBaz> foo);
+        string Serialize(IFoo<TBar, TBaz> foo, Projection projection);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ComplexJsonNestedSerialization.Core.Enums;
 using ComplexJsonNestedSerialization.Core.Interfaces;
 using ComplexJsonNestedSerialization.Core.JsonConverters;
 using Newtonsoft.Json;
@@ -10,21 +11,23 @@ namespace ComplexJsonNestedSerialization.Core.Services
         where TBar : IBar<TBaz>
         where TBaz : IBaz
     {
+        private readonly IJsonConvertersFactory _jsonConvertersFactory;
 
-    public virtual List<JsonConverter> JsonConverters { get; set; } =
-        new List<JsonConverter>()
+        public FooSerializer(IJsonConvertersFactory jsonConvertersFactory)
         {
-            new BazConverterClient()
-        };
+            _jsonConvertersFactory = jsonConvertersFactory;
+        }
 
-    public string Serialize(IFoo<TBar, TBaz> foo)
+        public string Serialize(IFoo<TBar, TBaz> foo, Projection projection)
         {
+            var converters = _jsonConvertersFactory.GetConvertersForProjection(projection);
+
             return JsonConvert.SerializeObject(
                 foo,
                 new JsonSerializerSettings()
                 {
                     Formatting = Formatting.Indented,
-                    Converters = JsonConverters,
+                    Converters = converters,
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }
             );

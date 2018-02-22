@@ -1,4 +1,6 @@
-﻿using ComplexJsonNestedSerialization.Core.Models;
+﻿using ComplexJsonNestedSerialization.Core.Enums;
+using ComplexJsonNestedSerialization.Core.Factories;
+using ComplexJsonNestedSerialization.Core.Models;
 using ComplexJsonNestedSerialization.Core.Services;
 using NUnit.Framework;
 using System.Linq;
@@ -26,7 +28,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
             const int numberOfBars = 2;
             const int numberOfBazes = 4;
 
-            var json = new FooSerializer<Bar, Baz>().Serialize(TestFoo.GetDefaultFoo());
+            var json = new FooSerializer<Bar, Baz>(new JsonConvertersFactory()).Serialize(TestFoo.GetDefaultFoo(), Projection.None);
             FooDeserializer<Foo, Bar, Baz> fd = new FooDeserializer<Foo, Bar, Baz>();
 
             var result = fd.Deserialize(json);
