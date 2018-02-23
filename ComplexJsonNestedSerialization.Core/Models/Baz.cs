@@ -1,4 +1,5 @@
-﻿using ComplexJsonNestedSerialization.Core.Interfaces;
+﻿using ComplexJsonNestedSerialization.Core.Enums;
+using ComplexJsonNestedSerialization.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Models
@@ -12,5 +13,6 @@ namespace ComplexJsonNestedSerialization.Core.Models
         [JsonIgnore]
         public bool ShouldBeIgnoredOnClassLevel { get; set; }
         public bool ShouldIgnoreInterfaceLevelProperty { get; set; }
+        public TestEnum TestEnumDeSerializedAsDescriptionOrName { get; set; }
     }
 }

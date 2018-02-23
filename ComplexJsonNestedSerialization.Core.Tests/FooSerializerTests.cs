@@ -1,15 +1,15 @@
-﻿using NUnit.Framework;
-using System;
-using ComplexJsonNestedSerialization.Core.JsonConverters;
+﻿using System.Collections.Generic;
+using System.Dynamic;
+using NUnit.Framework;
 using ComplexJsonNestedSerialization.Core.Models;
 using ComplexJsonNestedSerialization.Core.Services;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using ComplexJsonNestedSerialization.Core.Factories;
 using ComplexJsonNestedSerialization.Core.Enums;
 using ComplexJsonNestedSerialization.Core.Interfaces;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Tests
 {
@@ -71,6 +71,34 @@ namespace ComplexJsonNestedSerialization.Core.Tests
             var matches = regex.Matches(json);
 
             Assert.AreEqual(0, matches.Count(), nameof(matches));
+        }
+
+        [Test]
+        [TestCase(TestEnum.ThisIsTheFirstPart, "ThisIsTheFirstPart")]
+        [TestCase(TestEnum.Lmao, "Ayyy")]
+        [TestCase(TestEnum.HereIsAnother, "HereIsAnother")]
+        public void ShouldSerializeEnumDescriptionOrName(TestEnum testEnum, string expectedSerializationValue)
+        {
+            var json = JsonConvert.SerializeObject(testEnum, Formatting.Indented, new StringEnumConverter());
+
+            Assert.AreEqual($@"""{expectedSerializationValue}""", json);
+        }
+
+        [Test]
+        [TestCase(TestEnum.ThisIsTheFirstPart, @"""ThisIsTheFirstPart""")]
+        [TestCase(TestEnum.Lmao, @"""Ayyy""")]
+        [TestCase(TestEnum.HereIsAnother, @"""HereIsAnother""")]
+        public void ShouldDeserializeEnumDescriptionOrName(TestEnum expectedEnum, string json)
+        {
+            var result = JsonConvert.DeserializeObject<TestEnum>(json, new JsonSerializerSettings()
+            {
+                Converters = new List<JsonConverter>()
+                {
+                    new StringEnumConverter()
+                }
+            });
+
+            Assert.AreEqual(result, expectedEnum);
         }
     }
 }

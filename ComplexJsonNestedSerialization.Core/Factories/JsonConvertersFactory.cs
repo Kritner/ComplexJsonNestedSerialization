@@ -4,6 +4,7 @@ using ComplexJsonNestedSerialization.Core.JsonConverters;
 using ComplexJsonNestedSerialization.Core.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json.Converters;
 
 namespace ComplexJsonNestedSerialization.Core.Factories
 {
@@ -11,7 +12,10 @@ namespace ComplexJsonNestedSerialization.Core.Factories
     {
         public IList<JsonConverter> GetConvertersForProjection(Projection projection)
         {
-            List<JsonConverter> list = new List<JsonConverter>();
+            List<JsonConverter> list = new List<JsonConverter>
+            {
+                new StringEnumConverter()
+            };
 
             switch (projection)
             {
