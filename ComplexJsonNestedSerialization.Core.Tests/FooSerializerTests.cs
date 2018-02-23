@@ -79,7 +79,11 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         [TestCase(TestEnum.HereIsAnother, "HereIsAnother")]
         public void ShouldSerializeEnumDescriptionOrName(TestEnum testEnum, string expectedSerializationValue)
         {
-            var json = JsonConvert.SerializeObject(testEnum, Formatting.Indented, new StringEnumConverter());
+            var json = JsonConvert.SerializeObject(
+                testEnum, 
+                Formatting.Indented, 
+                new StringEnumConverter()
+            );
 
             Assert.AreEqual($@"""{expectedSerializationValue}""", json);
         }
