@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace ComplexJsonNestedSerialization.Core.Tests
 {
     [TestFixture]
-    public class FooSerializerTests
+    public class FooDeSerializerTests
     {
 
         private FooSerializer<Bar, Baz> _subject;
