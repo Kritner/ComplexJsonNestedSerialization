@@ -5,6 +5,7 @@ using System.Reflection;
 using ComplexJsonNestedSerialization.Core.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace ComplexJsonNestedSerialization.Core.JsonConverters
 {
@@ -35,7 +36,7 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
         public virtual void WriteJson(JsonWriter writer, TBaz baz, JsonSerializer serializer)
         {
             JObject jo = new JObject();
-
+            
             foreach (PropertyInfo prop in GetPublicProperties(baz))
             {
                 if (prop.CanRead && IsPropertyIncluded(baz, prop))
@@ -43,11 +44,28 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
                     object propVal = prop.GetValue(baz, null);
                     if (propVal != null)
                     {
-                        jo.Add(prop.Name, JToken.FromObject(propVal, serializer));
+                        var propName = GetPrintablePropertyName(prop);
+                        jo.Add(propName, JToken.FromObject(propVal, serializer));
                     }
                 }
             }
             jo.WriteTo(writer);
+        }
+
+        protected virtual bool IsPropertyIncluded(TBaz baz, PropertyInfo prop)
+        {
+            return true;
+        }
+
+        protected string GetPrintablePropertyName(PropertyInfo prop)
+        {
+            var jsonProp = prop.GetCustomAttribute<JsonPropertyAttribute>();
+            if (!string.IsNullOrEmpty(jsonProp?.PropertyName))
+            {
+                return jsonProp.PropertyName;
+            }
+
+            return prop.Name;
         }
 
         protected IEnumerable<PropertyInfo> GetPublicProperties(TBaz tBaz)
@@ -73,11 +91,6 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             }
 
             return props;
-        }
-
-        protected virtual bool IsPropertyIncluded(TBaz baz, PropertyInfo prop)
-        {
-            return true;
         }
     }
 }

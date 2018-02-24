@@ -1,4 +1,5 @@
-﻿using ComplexJsonNestedSerialization.Core.Interfaces;
+﻿using ComplexJsonNestedSerialization.Core.Enums;
+using ComplexJsonNestedSerialization.Core.Interfaces;
 using ComplexJsonNestedSerialization.Core.Models;
 using System.Collections.Generic;
 
@@ -29,7 +30,8 @@ namespace ComplexJsonNestedSerialization.Core.Tests
                                 Id = 0,
                                 AndYetAnotherProperty = 0,
                                 AnotherProperty = "0",
-                                MyProperty = "rakataka"
+                                MyProperty = "rakataka",
+                                TestEnumDeSerializedAsDescriptionOrName = TestEnum.Lmao
                             },
                             new Baz()
                             {

@@ -13,6 +13,7 @@ namespace ComplexJsonNestedSerialization.Core.Models
         [JsonIgnore]
         public bool ShouldBeIgnoredOnClassLevel { get; set; }
         public bool ShouldIgnoreInterfaceLevelProperty { get; set; }
+        [JsonProperty("RenamedProperty")]
         public TestEnum TestEnumDeSerializedAsDescriptionOrName { get; set; }
     }
 }

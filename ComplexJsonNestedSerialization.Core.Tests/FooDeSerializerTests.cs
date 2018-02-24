@@ -74,6 +74,20 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         }
 
         [Test]
+        public void ShouldUseJsonPropertyNameOnCustomConverter()
+        {
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo(), Projection.Client);
+
+            Regex regex = new Regex(
+                "RenamedProperty",
+                RegexOptions.IgnoreCase
+            );
+            var matches = regex.Matches(json);
+
+            Assert.AreEqual(4, matches.Count(), nameof(matches));
+        }
+
+        [Test]
         [TestCase(TestEnum.ThisIsTheFirstPart, "ThisIsTheFirstPart")]
         [TestCase(TestEnum.Lmao, "Ayyy")]
         [TestCase(TestEnum.HereIsAnother, "HereIsAnother")]
