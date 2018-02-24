@@ -8,8 +8,8 @@ using Newtonsoft.Json.Serialization;
 namespace ComplexJsonNestedSerialization.Core.Services
 {
     public class FooSerializer<TBar, TBaz> : IFooSerializer<TBar, TBaz>
-        where TBar : IBar<TBaz>
-        where TBaz : IBaz
+        where TBar : IBar<TBar, TBaz>
+        where TBaz : IBaz<TBar>
     {
         private readonly IJsonConvertersFactory _jsonConvertersFactory;
 

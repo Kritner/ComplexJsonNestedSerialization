@@ -23,7 +23,7 @@ namespace ComplexJsonNestedSerialization.Core.Factories
                     list.Add(new BazConverterClient());
                     break;
                 case Projection.Server:
-                    list.Add(new BazConverterServer<Baz>());
+                    list.Add(new BazConverterServer<Bar, Baz>());
                     break;
                 case Projection.None:
                 default:

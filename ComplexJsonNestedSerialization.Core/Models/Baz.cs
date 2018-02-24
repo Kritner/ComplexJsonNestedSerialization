@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Models
 {
-    public class Baz : IBaz
+    public class Baz : IBaz<Bar>
     {
         public int Id { get; set; }
         public string MyProperty { get; set; }
@@ -15,5 +15,7 @@ namespace ComplexJsonNestedSerialization.Core.Models
         public bool ShouldIgnoreInterfaceLevelProperty { get; set; }
         [JsonProperty("RenamedProperty")]
         public TestEnum TestEnumDeSerializedAsDescriptionOrName { get; set; }
+
+        public Bar Parent => null;
     }
 }

@@ -9,8 +9,9 @@ using Newtonsoft.Json.Serialization;
 
 namespace ComplexJsonNestedSerialization.Core.JsonConverters
 {
-    public abstract class BazConverterBase<TBaz> : JsonConverter, IBazConverter<TBaz>
-        where TBaz : IBaz
+    public abstract class BazConverterBase<TBar, TBaz> : JsonConverter, IBazConverter<TBar, TBaz>
+        where TBar : IBar<TBar, TBaz>
+        where TBaz : IBaz<TBar>
     {
         public override bool CanConvert(Type objectType)
         {

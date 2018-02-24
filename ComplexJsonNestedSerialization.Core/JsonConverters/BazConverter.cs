@@ -8,15 +8,16 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     /// All properties included in server projection
     /// </summary>
     /// <typeparam name="TBaz">The type to serialize</typeparam>
-    public class BazConverterServer<TBaz> : BazConverterBase<TBaz>
-        where TBaz : IBaz
+    public class BazConverterServer<TBar, TBaz> : BazConverterBase<TBar, TBaz>
+        where TBar : IBar<TBar, TBaz>
+        where TBaz : IBaz<TBar>
     {
     }
 
     /// <summary>
     /// Property omitted from projection (just using a random one as an example)
     /// </summary>
-    public class BazConverterClient : BazConverterBase<Baz>
+    public class BazConverterClient : BazConverterBase<Bar, Baz>
     {
         protected override bool IsPropertyIncluded(Baz baz, PropertyInfo prop)
         {
