@@ -74,6 +74,22 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         }
 
         [Test]
+        public void ShouldNotPrintBazPropertyWhenBarPropertySet()
+        {
+            const int expectedCount = 2;
+            var json = _subject.Serialize(TestFoo.GetDefaultFoo(), Projection.Client);
+            var propertyName = nameof(Baz.ShouldIncludeWhenBarSpecifies);
+            
+            Regex regex = new Regex(
+                propertyName,
+                RegexOptions.IgnoreCase
+            );
+            var matches = regex.Matches(json);
+
+            Assert.AreEqual(expectedCount, matches.Count(), nameof(matches));
+        }
+
+        [Test]
         public void ShouldUseJsonPropertyNameOnCustomConverter()
         {
             var json = _subject.Serialize(TestFoo.GetDefaultFoo(), Projection.Client);

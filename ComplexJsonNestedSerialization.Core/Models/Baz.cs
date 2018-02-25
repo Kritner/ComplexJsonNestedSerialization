@@ -6,7 +6,20 @@ namespace ComplexJsonNestedSerialization.Core.Models
 {
     public class Baz : IBaz<Bar>
     {
+        [JsonConstructor]
+        public Baz()
+        {
+
+        }
+
+        public Baz(Bar parent)
+        {
+            Parent = parent;
+        }
+
         public int Id { get; set; }
+        public Bar Parent { get; }
+
         public string MyProperty { get; set; }
         public string AnotherProperty { get; set; }
         public int AndYetAnotherProperty { get; set; }
@@ -15,7 +28,6 @@ namespace ComplexJsonNestedSerialization.Core.Models
         public bool ShouldIgnoreInterfaceLevelProperty { get; set; }
         [JsonProperty("RenamedProperty")]
         public TestEnum TestEnumDeSerializedAsDescriptionOrName { get; set; }
-
-        public Bar Parent => null;
+        public bool ShouldIncludeWhenBarSpecifies { get; set; }
     }
 }
