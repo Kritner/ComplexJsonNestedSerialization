@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace ComplexJsonNestedSerialization.Core.Models
 {
-    public class Bar : IBar<Baz>
+    public class Bar : IBar<Bar, Baz>
     {
         public int Id { get; set; }
         public bool ShouldSerializeSomeBazProperty { get; set; }
         public IEnumerable<Baz> Bazes { get; set; }
+        public bool ShouldIncludeBazProperty { get; set; }
     }
 }

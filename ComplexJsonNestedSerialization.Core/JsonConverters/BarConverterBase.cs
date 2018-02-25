@@ -2,7 +2,7 @@
 
 namespace ComplexJsonNestedSerialization.Core.JsonConverters
 {
-    public abstract class BazConverterBase<TBar, TBaz> : ConverterBase<TBaz>
+    public abstract class BarConverterBase<TBar, TBaz> : ConverterBase<TBar>
         where TBar : IBar<TBar, TBaz>
         where TBaz : IBaz<TBar>
     {

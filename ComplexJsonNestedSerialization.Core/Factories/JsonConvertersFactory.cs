@@ -20,10 +20,12 @@ namespace ComplexJsonNestedSerialization.Core.Factories
             switch (projection)
             {
                 case Projection.Client:
+                    list.Add(new BarConverterClient());
                     list.Add(new BazConverterClient());
                     break;
                 case Projection.Server:
-                    list.Add(new BazConverterServer<Baz>());
+                    list.Add(new BarConverterServer<Bar, Baz>());
+                    list.Add(new BazConverterServer<Bar, Baz>());
                     break;
                 case Projection.None:
                 default:
