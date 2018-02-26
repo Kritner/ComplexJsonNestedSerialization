@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
 using NUnit.Framework;
 using ComplexJsonNestedSerialization.Core.Models;
 using ComplexJsonNestedSerialization.Core.Services;
@@ -14,17 +13,17 @@ using Newtonsoft.Json;
 namespace ComplexJsonNestedSerialization.Core.Tests
 {
     [TestFixture]
-    public class FooDeSerializerTests
+    public class JsonConverterFooDeSerializerTests
     {
 
-        private FooSerializer<Bar, Baz> _subject;
+        private JsonConverterFooSerializer<Bar, Baz> _subject;
         private readonly IJsonConvertersFactory _jsonConverterFactory = 
             new JsonConvertersFactory();
 
         [SetUp]
         public void Setup()
         {
-            _subject = new FooSerializer<Bar, Baz>(_jsonConverterFactory);
+            _subject = new JsonConverterFooSerializer<Bar, Baz>(_jsonConverterFactory);
         }
         
         [Test]

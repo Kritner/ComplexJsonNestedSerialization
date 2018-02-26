@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using ComplexJsonNestedSerialization.Core.Enums;
+﻿using ComplexJsonNestedSerialization.Core.Enums;
 using ComplexJsonNestedSerialization.Core.Interfaces;
-using ComplexJsonNestedSerialization.Core.JsonConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace ComplexJsonNestedSerialization.Core.Services
 {
-    public class FooSerializer<TBar, TBaz> : IFooSerializer<TBar, TBaz>
+    public class JsonConverterFooSerializer<TBar, TBaz> : IFooSerializer<TBar, TBaz>
         where TBar : IBar<TBar, TBaz>
         where TBaz : IBaz<TBar>
     {
         private readonly IJsonConvertersFactory _jsonConvertersFactory;
 
-        public FooSerializer(IJsonConvertersFactory jsonConvertersFactory)
+        public JsonConverterFooSerializer(IJsonConvertersFactory jsonConvertersFactory)
         {
             _jsonConvertersFactory = jsonConvertersFactory;
         }
