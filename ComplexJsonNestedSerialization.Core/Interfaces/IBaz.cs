@@ -2,7 +2,7 @@
 
 namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    public interface IBaz<TBar>
+    public interface IBaz<out TBar>
     {
         int Id { get; set; }
         [JsonIgnore]
