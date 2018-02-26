@@ -43,19 +43,20 @@ namespace ComplexJsonNestedSerialization.Core.ContractResolvers
                 nameof(Bar.Bazes)
             };
 
-            if (includeProperties.Contains(jsonProperty.PropertyName, StringComparer.OrdinalIgnoreCase))
+            if (includeProperties.Contains(jsonProperty.UnderlyingName, StringComparer.OrdinalIgnoreCase))
             {
                 return jsonProperty.ShouldSerialize =
-                    instance => false;
+                    instance => true;
             }
 
-            return jsonProperty.ShouldSerialize;
+            return jsonProperty.ShouldSerialize =
+                instance => false;
         }
 
         private Predicate<object> BazSerialization(JsonProperty jsonProperty)
         {
             // let's just omit the "MyProperty" when its value is "rakataka"
-            if (jsonProperty.PropertyName == nameof(Baz.MyProperty))
+            if (jsonProperty.UnderlyingName == nameof(Baz.MyProperty))
             {
                 return jsonProperty.ShouldSerialize =
                     instance =>
@@ -67,7 +68,7 @@ namespace ComplexJsonNestedSerialization.Core.ContractResolvers
 
             //// Omit the "ShouldIncludeWhenBarSpecifies" property in Baz, 
             //// when Bar's "ShouldIncludeBazProperty" specifies
-            if (jsonProperty.PropertyName == nameof(Baz.ShouldIncludeWhenBarSpecifies))
+            if (jsonProperty.UnderlyingName == nameof(Baz.ShouldIncludeWhenBarSpecifies))
             {
                 return jsonProperty.ShouldSerialize =
                     instance =>
