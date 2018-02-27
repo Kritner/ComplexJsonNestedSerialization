@@ -5,9 +5,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace ComplexJsonNestedSerialization.Core.Services
 {
-    public class ContractResolverFooSerializer<TBar, TBaz> : IFooSerializer<TBar, TBaz>
-        where TBar : IBar<TBar, TBaz>
-        where TBaz : IBaz<TBar>
+    public class ContractResolverFooSerializer : IFooSerializer
     {
         private readonly IJsonConvertersFactory _jsonConvertersFactory;
         private readonly IContractResolverFactory _contractResolverFactory;
@@ -18,7 +16,7 @@ namespace ComplexJsonNestedSerialization.Core.Services
             _contractResolverFactory = contractResolverFactory;
         }
 
-        public string Serialize(IFoo<TBar, TBaz> foo, Projection projection)
+        public string Serialize(IFoo<IBar<IBaz>> foo, Projection projection)
         {
             // using "None" projection as we still want the default converters
             var converters = _jsonConvertersFactory.GetConvertersForProjection(Projection.None);

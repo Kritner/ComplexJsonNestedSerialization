@@ -2,10 +2,8 @@
 
 namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    public interface IFooSerializer<TBar, TBaz>
-        where TBar : IBar<TBar, TBaz>
-        where TBaz : IBaz<TBar>
+    public interface IFooSerializer
     {
-        string Serialize(IFoo<TBar, TBaz> foo, Projection projection);
+        string Serialize(IFoo<IBar<IBaz>> foo, Projection projection);
     }
 }

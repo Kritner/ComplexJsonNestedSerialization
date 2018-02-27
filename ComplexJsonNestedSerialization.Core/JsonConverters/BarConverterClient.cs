@@ -6,7 +6,7 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     /// <summary>
     /// Bar serialization - only include the ID and Bazes
     /// </summary>
-    public class BarConverterClient : BarConverterBase<Bar, Baz>
+    public class BarConverterClient : BarConverterBase<Bar>
     {
         /// <summary>
         /// Only includes the ID and Bazes

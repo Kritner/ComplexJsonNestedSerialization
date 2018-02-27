@@ -7,9 +7,8 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     /// </summary>
     /// <typeparam name="TBar"></typeparam>
     /// <typeparam name="TBaz"></typeparam>
-    public class BarConverterServer<TBar, TBaz> : BarConverterBase<TBar, TBaz>
-        where TBar : IBar<TBar, TBaz>
-        where TBaz : IBaz<TBar>
+    public class BarConverterServer<TBar> : BarConverterBase<TBar>
+        where TBar : IBar<IBaz>
     {
     }
 }
