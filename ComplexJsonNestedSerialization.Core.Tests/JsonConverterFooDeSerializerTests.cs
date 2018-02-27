@@ -16,14 +16,14 @@ namespace ComplexJsonNestedSerialization.Core.Tests
     public class JsonConverterFooDeSerializerTests
     {
 
-        private JsonConverterFooSerializer<Bar, Baz> _subject;
+        private JsonConverterFooSerializer _subject;
         private readonly IJsonConvertersFactory _jsonConverterFactory = 
             new JsonConvertersFactory();
 
         [SetUp]
         public void Setup()
         {
-            _subject = new JsonConverterFooSerializer<Bar, Baz>(_jsonConverterFactory);
+            _subject = new JsonConverterFooSerializer(_jsonConverterFactory);
         }
         
         [Test]

@@ -2,11 +2,11 @@
 
 namespace ComplexJsonNestedSerialization.Core.Interfaces
 {
-    public interface IBaz<out TBar>
+    public interface IBaz
     {
         int Id { get; set; }
         [JsonIgnore]
-        TBar Parent { get; }
+        IBar<IBaz> Parent { get; }
         [JsonIgnore]
         bool ShouldIgnoreInterfaceLevelProperty { get; set; }
         bool ShouldIncludeWhenBarSpecifies { get; set; }

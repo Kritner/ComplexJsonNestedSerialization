@@ -3,10 +3,8 @@ using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Services
 {
-    public class FooDeserializer<TFoo, TBar, TBaz> : IFooDeserializer<TFoo, TBar, TBaz>
-        where TFoo : IFoo<TBar, TBaz>
-        where TBar : IBar<TBar, TBaz>
-        where TBaz : IBaz<TBar>
+    public class FooDeserializer<TFoo> : IFooDeserializer<TFoo>
+        where TFoo : IFoo<IBar<IBaz>>
     {
         public TFoo Deserialize(string fooJson)
         {

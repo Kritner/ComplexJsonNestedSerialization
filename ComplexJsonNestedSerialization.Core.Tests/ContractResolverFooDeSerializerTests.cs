@@ -16,7 +16,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
     public class ContractResolverFooDeSerializerTests
     {
 
-        private ContractResolverFooSerializer<Bar, Baz> _subject;
+        private ContractResolverFooSerializer _subject;
         private readonly IJsonConvertersFactory _jsonConverterFactory = 
             new JsonConvertersFactory();
         private readonly IContractResolverFactory _contractResolverFactory =
@@ -25,7 +25,7 @@ namespace ComplexJsonNestedSerialization.Core.Tests
         [SetUp]
         public void Setup()
         {
-            _subject = new ContractResolverFooSerializer<Bar, Baz>(
+            _subject = new ContractResolverFooSerializer(
                 _jsonConverterFactory, 
                 _contractResolverFactory
             );

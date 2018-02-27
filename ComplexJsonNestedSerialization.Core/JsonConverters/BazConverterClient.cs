@@ -6,7 +6,7 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
     /// <summary>
     /// Property omitted from projection (just using a random one as an example)
     /// </summary>
-    public class BazConverterClient : BazConverterBase<Bar, Baz>
+    public class BazConverterClient : BazConverterBase<Baz>
     {
         protected override bool IsPropertyIncluded(Baz baz, PropertyInfo prop)
         {

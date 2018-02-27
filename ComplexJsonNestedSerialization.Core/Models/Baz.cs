@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ComplexJsonNestedSerialization.Core.Models
 {
-    public class Baz : IBaz<Bar>
+    public class Baz : IBaz
     {
         [JsonConstructor]
         public Baz()
@@ -18,7 +18,7 @@ namespace ComplexJsonNestedSerialization.Core.Models
         }
 
         public int Id { get; set; }
-        public Bar Parent { get; }
+        public IBar<IBaz> Parent { get; }
 
         public string MyProperty { get; set; }
         public string AnotherProperty { get; set; }
