@@ -7,6 +7,5 @@ namespace ComplexJsonNestedSerialization.Core.Interfaces
     {
         int Id { get; set; }
         IEnumerable<TBaz> Bazes { get; }
-        bool ShouldIncludeBazProperty { get; set; }
     }
 }

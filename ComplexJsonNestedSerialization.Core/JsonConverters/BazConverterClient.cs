@@ -19,7 +19,7 @@ namespace ComplexJsonNestedSerialization.Core.JsonConverters
             // Omit the "ShouldIncludeWhenBarSpecifies" property in Baz, 
             // when Bar's "ShouldIncludeBazProperty" specifies
             if (prop.Name == nameof(baz.ShouldIncludeWhenBarSpecifies) 
-                && !baz.Parent.ShouldIncludeBazProperty)
+                && !((Bar)baz.Parent).ShouldIncludeBazProperty)
             {
                 return false;
             }

@@ -74,7 +74,7 @@ namespace ComplexJsonNestedSerialization.Core.ContractResolvers
                     instance =>
                     {
                         Baz baz = (Baz)instance;
-                        return baz.Parent.ShouldIncludeBazProperty;
+                        return ((Bar)baz.Parent).ShouldIncludeBazProperty;
                     };
             }
 
